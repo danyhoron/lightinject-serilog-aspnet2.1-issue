@@ -29,7 +29,8 @@ namespace LightInject_Serilog_aspnetcore_2._1
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var containerOptions = new ContainerOptions { EnablePropertyInjection = false };
+            var containerOptions = new ContainerOptions { EnablePropertyInjection = false, DefaultServiceSelector = serviceNames => serviceNames.SingleOrDefault(string.IsNullOrWhiteSpace) ?? serviceNames.Last() };
+        
             var container = new ServiceContainer(containerOptions);
             return container.CreateServiceProvider(services);
         }
